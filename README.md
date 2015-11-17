@@ -51,6 +51,7 @@ module.exports = {
   * `[path]` the path of the image.
   * `[hash]` the hash or the image content.
   * `[pathhash]` the hash or the image path.
+* `angularBaseWorkaround` Adds workaround for issue with combination of `<base>` and History API which is [typical for Angular.js](https://github.com/angular/angular.js/issues/8934). Default is `false`.
 * `prefixize` isolates an image content by prefixing its `id`, `xlink:href` and `url(#id)` elements. Default is `true`.
 * `spriteModule` defines [custom sprite implementation](#custom-sprite-implementation) module path.
 
@@ -112,3 +113,24 @@ module.exports.GLYPHS = GLYPHS;
 var Icon = require('components/icon');
 <Icon glyph={Icon.GLYPHS.UNICORN}>
 ```
+
+Usage with React 0.14
+
+```js
+// icon.jsx
+export default function Icon({glyph, width = 16 , height = 16, className = 'icon'}){
+  return (
+    <svg className={className} width={width} height={height}>
+      <use xlinkHref={glyph} />
+    </svg>
+  );
+}
+
+// some-component.jsx
+import Icon from './icon';
+import help from './images/icons/Help.svg';
+
+<Icon glyph={help} />
+```
+
+
